@@ -42,6 +42,7 @@ private:
 
 	vector<vector<int>> stats_dens_counts;  // vector for accumulating particle density counts
 	vector<int> stats_coldens_counts;  // vector for accumulating integrated dayside column density counts
+        vector<double> stats_angleavg_dens;  // vector for accumulating angle-averaged column density counts in x=const. plane
 	vector<vector<int>> stats_dens2d_counts;  // stores a 2d grid of dayside column density counts
 	int stats_num_EDFs;  // number of altitude EDFs to track; populated from corona3d_2020.cfg
 	vector<int> stats_EDF_alts;  // holds list of altitudes that (in km above surface) that EDFs are tracked at

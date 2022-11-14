@@ -32,6 +32,7 @@ Atmosphere::Atmosphere(int n, int num_to_trace, string trace_output_dir, Planet 
 	stats_EDFs.resize(2);   // index 0 is day side EDFs, 1 is night side
 	stats_EDFs[0].resize(stats_num_EDFs);
 	stats_EDFs[1].resize(stats_num_EDFs);
+	stats_angleavg_dens.resize(stats_num_EDFs); // vector for accumulating angle-averaged column density counts in x=const. plane
 
 	for (int i=0; i<stats_num_EDFs; i++)
 	{
@@ -406,7 +407,7 @@ void Atmosphere::run_simulation(double dt, int num_steps, double lower_bound, do
 void Atmosphere::update_stats(double dt, int i)
 {
 	double x = my_parts[i]->get_x();
-	//double y = my_parts[i]->get_y();
+	double y = my_parts[i]->get_y();
 	double z = my_parts[i]->get_z();
 	int x_index = 0;
 	//int y_index = 0;
@@ -484,6 +485,22 @@ void Atmosphere::update_stats(double dt, int i)
 			stats_loss_rates[j] = stats_loss_rates[j] + radial_v;
 		}
 	}
+	
+	// for bg angle-averaged density calculation in constant x plane (limb observation)
+	for (int j=0; j<stats_num_EDFs; j++)
+	  {
+	    if ((int)(1e-5*(x-my_planet.get_radius())) == stats_EDF_alts[j]) // if particle in the slab where x = the chosen altitude (towards the Sun)
+	      {
+		if (sqrt(pow(y,2) + pow(z,2)) <= 1e5/2)
+	      {
+		stats_angleavg_dens[j] += 1;
+		  }
+		else if (sqrt(pow(y,2) + pow(z,2)) > 1e5/2)
+		{
+		  stats_angleavg_dens[j] += (2/constants::pi)*asin(1e5/(2*sqrt(pow(y,2) + pow(z,2))));
+		}
+		}
+	  }
 }
 
 void Atmosphere::output_stats(double dt, double rate, int total_parts, string output_dir)
@@ -497,11 +514,12 @@ void Atmosphere::output_stats(double dt, double rate, int total_parts, string ou
 	double coldens_day = 0.0;
 	double sum_day = 0.0;
 	double sum_night = 0.0;
-	ofstream dens_day_out, dens_night_out, coldens_day_out, dens2d_out, EDF_day_out, EDF_night_out, loss_rates_out;
+	ofstream dens_day_out, dens_night_out, coldens_day_out, dens2d_out, EDF_day_out, EDF_night_out, loss_rates_out, angleavg_dens_out;
 	dens_day_out.open(output_dir + "density1d_day.out");
 	dens_night_out.open(output_dir + "density1d_night.out");
 	coldens_day_out.open(output_dir + "column_density_day.out");
 	dens2d_out.open(output_dir + "density2d.out");
+	angleavg_dens_out.open(output_dir + "angleavg_dens.out");
 
 	dens_day_out << "#alt[km]\tdensity[cm-3]\n";
 	dens_night_out << "#alt[km]\tdensity[cm-3]\n";
@@ -520,7 +538,7 @@ void Atmosphere::output_stats(double dt, double rate, int total_parts, string ou
 		sum_night = (double)stats_dens_counts[1][i];
 
 		dens_day = (dt*rate/(double)total_parts*sum_day) / volume;
-	    dens_night = (dt*rate/(double)total_parts*sum_night) / volume;
+	        dens_night = (dt*rate/(double)total_parts*sum_night) / volume;
 
 		dens_day_out << i << "\t\t" << dens_day << "\n";
 		dens_night_out << i << "\t\t" << dens_night << "\n";
@@ -562,6 +580,9 @@ void Atmosphere::output_stats(double dt, double rate, int total_parts, string ou
 		surface_upper = 2.0*constants::pi * (r_in_cm+1e5) * (r_in_cm+1e5);
 		volume = 2.0*constants::pi/3.0 * (pow(r_in_cm+1e5, 3.0) - pow(r_in_cm, 3.0));
 
+		angleavg_dens_out << stats_EDF_alts[i]  << "\t" << ( dt * rate * stats_angleavg_dens[i] ) /
+		                                                   ((double)total_parts*1e5*1e5) << "\n";
+				
 		loss_rates_out << stats_EDF_alts[i] << "\t\t" << (stats_loss_rates[i] / volume) * (dt*rate/(double)total_parts) * surface_upper << "\n";
 
 		for (int j=0; j<201; j++)
@@ -578,4 +599,5 @@ void Atmosphere::output_stats(double dt, double rate, int total_parts, string ou
 		EDF_night_out.close();
 	}
 	loss_rates_out.close();
+	angleavg_dens_out.close();
 }
