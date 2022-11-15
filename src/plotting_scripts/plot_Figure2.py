@@ -26,8 +26,9 @@ ax8 = plt.subplot2grid(shape=(4, 40), loc=(3, 7), colspan=7, rowspan=1)
 ax9 = plt.subplot2grid(shape=(4, 40), loc=(3, 14), colspan=7, rowspan=1)
 ax10 = plt.subplot2grid(shape=(4, 40), loc=(3, 21), colspan=7, rowspan=1)
 
-output_directory_LSA = '../model_output_data/LSA/example/output'
-output_directory_HSA = '../model_output_data/HSA/example/output'
+output_directory_LSA = '../model_output_data/LSA/1/output'
+output_directory_HSA = '../model_output_data/HSA/1/output'
+
 
 # Read in density data
 dens_data_day_LSA = np.genfromtxt('%s/density1d_day.out' % (output_directory_LSA))
@@ -51,6 +52,9 @@ ax1.set_ylim(90, 5000)
 ax1.set_xlim(1, 200)
 ax1.set_ylabel('Altitude (km)',fontsize=12)
 ax1.set_xlabel('Dayside hot H density ($\mathrm{cm^{-3}}$)',fontsize=12)
+
+output_directory_LSA = '../model_output_data/LSA/example/'
+output_directory_HSA = '../model_output_data/HSA/example/'
 
 # Plot panel (b) --- brightnesses
 # Find nadir brightnesses
@@ -94,6 +98,9 @@ ax2a.text(0.1,2.5e3,'HSA\nnadir',color='tab:orange',fontsize=11)
 ax2a.text(1.3,750,'LSA\nnadir',color='tab:blue',fontsize=14)
 ax2a.text(3.5,320,'HSA\nlimb',color='tab:orange',fontsize=14,fontweight='bold')
 ax2a.text(7.3,700,'LSA\nlimb',color='tab:blue',fontsize=14,fontweight='bold')
+
+output_directory_LSA = '../model_output_data/LSA/1/output'
+output_directory_HSA = '../model_output_data/HSA/1/output'
 
 # Plot panels (g)--(j) --- energy distribution functions
 v_min = 0.01
