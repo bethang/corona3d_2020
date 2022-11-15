@@ -240,7 +240,7 @@ def plot_Figure1abc(SA_list):
             tick.set_color('none')
     for tick in axa.yaxis.get_majorticklabels():
         tick.set_fontsize(14)
-    fig1.savefig('figures/Figure1.pdf',dpi=1200)
+    fig1.savefig('Figure1.pdf',dpi=1200)
 
 
 

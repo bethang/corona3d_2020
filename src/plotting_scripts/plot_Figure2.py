@@ -224,7 +224,7 @@ ax1.set_position([pos.x0, pos.y0+(0.22*pos.height), pos.width*0.95, pos.height])
 pos = ax2a.get_position()
 ax2a.set_position([pos.x0-(0.03*pos.width), pos.y0+(0.22*pos.height), pos.width*0.95, pos.height])
 
-plt.savefig('figures/Figure2.pdf',dpi=1200)
+plt.savefig('Figure2.pdf',dpi=1200)
 plt.show()
 
 

@@ -196,7 +196,7 @@ def escape_prob_curves(return_or_plot):
     
     if return_or_plot == 'Plot':
         plt.gcf().subplots_adjust(hspace=0.3,wspace=0.2,top=0.94,bottom=0.1,left=0.12,right=0.98)
-        fig3.savefig('figures/Figure3.pdf',dpi=1200)
+        fig3.savefig('Figure3.pdf',dpi=1200)
     else:
         return (escape_rates_to_return,escape_z_to_return)
 
