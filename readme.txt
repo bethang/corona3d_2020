@@ -155,6 +155,7 @@ Further details for each script can be found below.
 Figures are saved in src/plotting_scripts/figures/
 
 Supplementary Tables:
+
 - The values in Table S1 correspond to the 'Total loss rate' output, printed to the Terminal after each run and saved in model_output_data/../../output/console.out.
 
 - The values in Table S2 are escape fractions that were calculated and manually input to model_output_data/escape_probabilities_LSA.csv and model_output_data/escape_probabilities_HSA.csv after each run.
