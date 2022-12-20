@@ -171,7 +171,7 @@ def escape_prob_curves(return_or_plot):
             ax1.plot([0,1],[np.divide(z_new[v],1e5),np.divide(z_new[v],1e5)],color='silver',linestyle='--',linewidth=0.5,zorder=-2) # Plot 1/e escape level
             ax1.text(0.99,np.divide(z_new[v],1e5)+2,'HSA\n 0.2 eV',color='darkgrey',fontsize=9,ha='right')
 
-    # Lists of escape probabilities and altitudes (from fitted curves), to return to plot_Figure1abc.py
+    # Lists of escape probabilities and altitudes (from fitted curves), to return to calling script, if 'Return' is input
     for escape_rates in [calculated_escape_5eV_LSA,calculated_escape_5eV_HSA,calculated_escape_0_2eV_LSA,calculated_escape_0_2eV_HSA]:
         escape_rates_to_return.append(escape_rates)
     for escape_z in [np.divide(z_new,1e5),np.divide(z_new,1e5),np.divide(z_new,1e5),np.divide(z_new,1e5)]:

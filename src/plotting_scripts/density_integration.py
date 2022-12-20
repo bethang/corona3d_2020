@@ -4,7 +4,7 @@
 
 # Functions to integrate densities of output hot H density (dayside) values, looking straight down (nadir), straight up (zenith), or a limb view from a chosen spacecraft altitude.
 
-# Funtions print integrated density (N, in cm-3) and resulting brightness (I, in Rayleighs), assuming I = gN. g = 1e-3 photons particle-1 s-1 (Anderson & Hord, 1971).
+# Funtions print integrated density (N, in cm-2) and resulting brightness (I, in Rayleighs), assuming I = gN. g = 1e-3 photons particle-1 s-1 (Anderson & Hord, 1971).
 
 def nadir_density(sc_alt,filename):
     g = 1e-3 # g at Mars

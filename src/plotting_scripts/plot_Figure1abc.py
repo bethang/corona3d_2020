@@ -25,7 +25,7 @@ def plot_Figure1abc(SA_list):
     ### What you need to input: ###
     # 1) R1 data file
     # 2) R2 data file
-    # 3) T required switch, T data file, T type (neutral, ion, electron)
+    # 3) T data file, T type ('mechanism_Ts'; neutral, ion, electron)
     # 4) Reaction rate coefficient equation
 
     mechanism_labels = ['HCO+ + e- \u2192 CO + H']                       
