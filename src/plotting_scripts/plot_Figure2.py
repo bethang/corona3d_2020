@@ -213,7 +213,7 @@ ax5.text(8,100,'(e)',fontsize=12)
 ax6.text(8,100,'(f)',fontsize=12)
 ax7.text(8,0.7,'(g)',fontsize=12,color='w')
 ax8.text(8,0.7,'(h)',fontsize=12,color='w')
-ax9.text(8,0.7,'(g)',fontsize=12,color='w')
+ax9.text(8,0.7,'(i)',fontsize=12,color='w')
 ax10.text(8,0.7,'(j)',fontsize=12,color='w')
 
 # Colorbar

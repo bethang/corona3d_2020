@@ -22,8 +22,8 @@ datFile = '%s/positions1000.out' % (output_directory)
 data = np.genfromtxt(datFile)
 fig = plt.figure(figsize=[8,8])
 ax = plt.axes(projection="3d")
-ax.plot_wireframe(x, y, z, rstride=5, cstride=5, color='tomato') # Mars surface
-ax.scatter(data[:,0] / 100000, data[:,1] / 100000, data[:,2] / 100000, marker='.',s=0.1,color='k')
+ax.plot_wireframe(x, y, z, rstride=5, cstride=5, color='k') # Mars surface
+ax.scatter(data[:,0] / 100000, data[:,1] / 100000, data[:,2] / 100000, marker='.',s=0.1,color='#c51160')
 ax.set_xlabel('x (km)',fontsize=16)
 ax.set_ylabel('y (km)',fontsize=16,labelpad=15)
 ax.set_zlabel('z (km)',fontsize=16,labelpad=15)
@@ -43,7 +43,7 @@ for tick in ax.zaxis.get_majorticklabels():
 for tick in ax.zaxis.get_majorticklabels()[2:16:2]:
     tick.set_color('none')
 ax.tick_params(axis='z', which='major', pad=9)
-#plt.savefig('initial_positions.pdf')
+plt.savefig('initial_positions.png')
 plt.show()
 
 # Plot end positions of 1e5 test particles
@@ -51,8 +51,8 @@ datFile = '%s/positions4711000.out'  % (output_directory)
 data = np.genfromtxt(datFile)
 fig = plt.figure(figsize=[8,8])
 ax = plt.axes(projection="3d")
-ax.plot_wireframe(x, y, z, rstride=5, cstride=5, color='tomato') # Mars surface
-ax.scatter(data[:,0] / 100000, data[:,1] / 100000, data[:,2] / 100000, marker='.',s=0.1,color='k')
+ax.plot_wireframe(x, y, z, rstride=5, cstride=5, color='k') # Mars surface
+ax.scatter(data[:,0] / 100000, data[:,1] / 100000, data[:,2] / 100000, marker='.',s=0.1,color='#c51160')
 ax.set_xlabel('x (km)',fontsize=16)
 ax.set_ylabel('y (km)',fontsize=16,labelpad=15)
 ax.set_zlabel('z (km)',fontsize=16,labelpad=15)
@@ -72,5 +72,5 @@ for tick in ax.zaxis.get_majorticklabels():
 for tick in ax.zaxis.get_majorticklabels()[2:16:2]:
     tick.set_color('none')
 ax.tick_params(axis='z', which='major', pad=9)
-plt.savefig('figures/end_positions.pdf',dpi=1200)
+plt.savefig('figures/end_positions.png',dpi=1200)
 plt.show()
