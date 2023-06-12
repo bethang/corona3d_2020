@@ -6,7 +6,6 @@
  */
 
 #include "Atmosphere.hpp"
-//#include "vtally.hpp"
 
 // construct atmosphere using given parameters
 Atmosphere::Atmosphere(int n, int num_to_trace, string trace_output_dir, Planet p, vector<shared_ptr<Particle>> parts, shared_ptr<Distribution> dist, Background_Species bg, int num_EDFs, int EDF_alts[])
@@ -396,7 +395,7 @@ void Atmosphere::run_simulation(double dt, int num_steps, double lower_bound, do
 	}
 
 	output_stats(dt, (global_rate / 2.0), num_parts, output_stats_dir);
-	vtally(my_parts,100.0,100.0,30.0,40.0);
+	Vtally(my_parts,100.0,100.0,30.0,40.0);
 
 	cout << "Number of collisions: " << bg_species.get_num_collisions() << endl;
 	cout << "Active particles remaining: " << active_parts << endl;

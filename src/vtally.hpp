@@ -11,11 +11,11 @@
 //#include "Atmosphere.hpp"
 #include "Particle.hpp"
 
-class vtally { // public Atmosphere {
+class Vtally { // public Atmosphere {
 public:
-  vtally(vector<shared_ptr<Particle>> my_parts,double vtally_x, double vtally_dx, double vtally_psi, double vtally_w);
-  virtual ~vtally();
-        void tallying(double vtally_x, double vtally_dx, double vtally_psi, double vtally_w);
+  Vtally(vector<shared_ptr<Particle>> my_parts,double vtally_x, double vtally_dx, double vtally_psi, double vtally_w);
+  virtual ~Vtally();
+  //    void tallying(double vtally_x, double vtally_dx, double vtally_psi, double vtally_w);
         vector<shared_ptr<Particle>> my_parts;         // array of particles to be tracked
   //	static const double mass;
   //	static const string name;
