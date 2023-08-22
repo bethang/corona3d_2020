@@ -52,8 +52,8 @@ private:
 	vector<double> stats_loss_rates;  // loss rates at each EDF altitude are calculated and stored here
 
 	// these two modules are where stats are accumulated and then output at the end of a simulation
-	void update_stats(double dt, int idx);
-	void output_stats(double dt, double rate, int total_parts, string output_dir);
+        void update_stats(double dt, int idx);
+  void output_stats(double dt, double rate, int total_parts, string output_dir, Vtally my_vtally);
 
 	// output test particle trace data for selected particles
 	void output_collision_data();

@@ -271,7 +271,7 @@ void Atmosphere::output_alt_energy_distro(double alt_in_cm, double e_bin_width, 
 // a lot of stuff in here needs to be changed to be dynamically determined at runtime
 void Atmosphere::run_simulation(double dt, int num_steps, double lower_bound, double upper_bound, int print_status_freq, int output_pos_freq, string output_pos_dir, string output_stats_dir)
 {
-        Vtally my_vtally(my_parts,num_parts,stats_num_EDFs,stats_EDF_alts,100.0,20.0,30.0,400.0);
+        Vtally my_vtally(my_parts,num_parts,stats_num_EDFs,stats_EDF_alts,100.0,20.0,30.0,400.0,dt);
 	int night_escape_count = 0;
 	int day_escape_count = 0;
 	double v_esc_current = 0.0;
@@ -331,8 +331,8 @@ void Atmosphere::run_simulation(double dt, int num_steps, double lower_bound, do
 
 		for (int j=0; j<active_parts; j++)
 		{
-			update_stats(dt, active_indices[j]);
-		        my_vtally.update_vtally(active_indices[j], my_parts, stats_num_EDFs, stats_EDF_alts);
+		  update_stats(dt, active_indices[j]);
+		        my_vtally.update_vtally(active_indices[j], my_parts, stats_num_EDFs, stats_EDF_alts, dt, (global_rate/2.0), num_parts);
 			my_parts[active_indices[j]]->do_timestep(dt, k);
 
 			if (bg_species.check_collision(my_parts[active_indices[j]], dt))
@@ -396,7 +396,7 @@ void Atmosphere::run_simulation(double dt, int num_steps, double lower_bound, do
 		output_collision_data();
 	}
 
-	output_stats(dt, (global_rate / 2.0), num_parts, output_stats_dir);
+	output_stats(dt, (global_rate / 2.0), num_parts, output_stats_dir, my_vtally);
 
         //my_vtally.print_things(100.0, my_parts);
 
@@ -569,7 +569,7 @@ void Atmosphere::update_stats(double dt, int i)
 		    
 }
 
-void Atmosphere::output_stats(double dt, double rate, int total_parts, string output_dir)
+void Atmosphere::output_stats(double dt, double rate, int total_parts, string output_dir, Vtally my_vtally)
 {
 	double volume = 0.0;
 	double surface_upper = 0.0;
@@ -582,6 +582,7 @@ void Atmosphere::output_stats(double dt, double rate, int total_parts, string ou
 	double sum_night = 0.0;
 //bg temp -- remove	double w = 100000e5;
 	ofstream dens_day_out, dens_night_out, coldens_day_out, dens2d_out, EDF_day_out, EDF_night_out, loss_rates_out, angleavg_dens_out;
+
 	dens_day_out.open(output_dir + "density1d_day.out");
 	dens_night_out.open(output_dir + "density1d_night.out");
 	coldens_day_out.open(output_dir + "column_density_day.out");
@@ -638,6 +639,7 @@ void Atmosphere::output_stats(double dt, double rate, int total_parts, string ou
 	loss_rates_out << "#alt[km]\tloss rate[s-1]\n";
 	for (int i=0; i<stats_num_EDFs; i++)
 	{
+	  	my_vtally.record_vtallies(stats_EDF_alts, i, output_dir);
 		EDF_day_out.open(output_dir + "EDF_day_" + to_string(stats_EDF_alts[i]) + "km.out");
 		EDF_night_out.open(output_dir + "EDF_night_" + to_string(stats_EDF_alts[i]) + "km.out");
 	//bg temp -- remove	angleavg_vel_dist_out.open(output_dir + "angleavg_vel_dist_" + to_string(stats_EDF_alts[i]) + "km.csv");

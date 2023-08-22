@@ -9,7 +9,7 @@ def calculate_N_from2d():
     g = 1e-3
 
     extra_factor = (500e-6*6.13e25)/(1e5*grid_width*grid_width)
-    with open ('LSA/1/output/density2d.out','r') as f1:
+    with open ('/Users/begr3234/corona3d2023/safe/model_output_data/LSA/1/output/density2d.out','r') as f1:
         lines = f1.readlines()
         z_0_line = lines[mid].split()
         N1 = []
