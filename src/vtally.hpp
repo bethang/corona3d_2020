@@ -13,25 +13,12 @@
 
 class Vtally
 {
-private:
   
   
 public:
-  Vtally(vector<shared_ptr<Particle>> my_parts, int num_parts, int num_EDFs,vector<int> EDF_alts, double vtally_x, double vtally_dx, double vtally_psi, double vtally_w, double dt); //, double rate);
+  Vtally(int num_parts, int num_EDFs,vector<int> EDF_alts, double vtally_x, double vtally_dx, double vtally_psi, double vtally_w, double dt); //, double rate);
   virtual ~Vtally();
-       int num_vel_bins;
-       double LOS_velocity_spare;
-       int vel_bin;
-       double vel_min;
-       double vel_max;
-       double dx;
-       int no_LOS_angle_bins;
-       double angle_spacing;
-       double angle;
-       double w;
-       int bin;
-       double vel_LOS;
-       double weighting_factor;
+
   
   // some of the definitions from a different file, for reference
   //    void tallying(double vtally_x, double vtally_dx, double vtally_psi, double vtally_w);
@@ -49,8 +36,21 @@ public:
   void record_vtallies(vector<int> stats_EDF_alts, int i, string output_dir);
 
 private:
-        vector<vector<double>> vtally_matrix; // rows = no. of velocity bins; columns = no. of altitudes (from corona3d.cfg); contains counts and is added to at each timestep.
-        vector<vector<double>> cos_sin_angle; // rows: [0] = cos(angle); [1] = sin(angle); columns: one for each angle
+       int num_vel_bins;
+       double LOS_velocity_spare;
+       int vel_bin;
+       double vel_min;
+       double vel_max;
+       double dx;
+       int no_LOS_angle_bins;
+       double angle_spacing;
+       double angle;
+       double w;
+       int bin;
+       double vel_LOS;
+       double weighting_factor;
+       vector<vector<double>> vtally_matrix; // rows = no. of velocity bins; columns = no. of altitudes (from corona3d.cfg); contains counts and is added to at each timestep.
+       vector<vector<double>> cos_sin_angle; // rows: [0] = cos(angle); [1] = sin(angle); columns: one for each angle
 
 };
 

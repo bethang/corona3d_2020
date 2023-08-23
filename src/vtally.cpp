@@ -8,7 +8,7 @@
 #include "Vtally.hpp"
 #include <iostream>
 
-Vtally::Vtally(vector<shared_ptr<Particle>> my_parts, int num_parts, int num_EDFs, vector<int> EDF_alts, double vtally_x, double vtally_dx, double vtally_psi, double vtally_w, double dt){//, double rate) {
+Vtally::Vtally(int num_parts, int num_EDFs, vector<int> EDF_alts, double vtally_x, double vtally_dx, double vtally_psi, double vtally_w, double dt){//, double rate) {
 
   std::cout << "num_parts\t" << num_parts;
   num_vel_bins = 36; // set number of velocity bins here
@@ -17,7 +17,7 @@ Vtally::Vtally(vector<shared_ptr<Particle>> my_parts, int num_parts, int num_EDF
   dx = 1;            // if particle's x coordinate is between chosen altitude and chosen altitude + dx, add it to the count (km)
   no_LOS_angle_bins = 12;   // no of LOS angles over which vel dist is averaged
   angle_spacing = constants::pi/no_LOS_angle_bins;
-  w = 1e5;             // width of line of sight, in y-z plane (cm)
+  w = 10000e5;             // width of line of sight, in y-z plane (cm)
 
   vtally_matrix.resize(num_vel_bins);
   for (int i=0; i<num_vel_bins; i++)
@@ -105,13 +105,7 @@ void Vtally::calculate_LOS_velocity(int i, vector<shared_ptr<Particle>> my_parts
   } // NOTE THAT, AS IS, IT WILL SOMETIMES/OFTEN RETURN NOTHING!!
 
 int Vtally::choose_vel_bin(const double &LOS_velocity) {
-  for (int j=0; j < num_vel_bins; j++){
-    if (LOS_velocity*1e-5 >= vel_min + j*((vel_max-vel_min)/num_vel_bins) and LOS_velocity*1e-5 < vel_min + (j+1)*((vel_max-vel_min)/num_vel_bins)){
-      //  std::cout << LOS_velocity << "\t" << LOS_velocity*1e-5  << "\t" << j << "\n";
-      bin = j;
-      break;
-	  }
-      }
+  bin = std::floor(((LOS_velocity*1e-5)-vel_min)/2.5);
   return bin;
 }
 
