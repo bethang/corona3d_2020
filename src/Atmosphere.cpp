@@ -271,7 +271,7 @@ void Atmosphere::output_alt_energy_distro(double alt_in_cm, double e_bin_width, 
 // a lot of stuff in here needs to be changed to be dynamically determined at runtime
 void Atmosphere::run_simulation(double dt, int num_steps, double lower_bound, double upper_bound, int print_status_freq, int output_pos_freq, string output_pos_dir, string output_stats_dir)
 {
-        Vtally my_vtally(num_parts,stats_num_EDFs,stats_EDF_alts,100.0,20.0,30.0,400.0,dt);
+  
 	int night_escape_count = 0;
 	int day_escape_count = 0;
 	double v_esc_current = 0.0;
@@ -294,6 +294,9 @@ void Atmosphere::run_simulation(double dt, int num_steps, double lower_bound, do
 	double v_esc_upper = sqrt(2.0 * constants::G * my_planet.get_mass() / upper_bound);
 	double global_rate = my_dist->get_global_rate();
 	double k = my_planet.get_k_g();
+	Vtally my_vtally(stats_num_EDFs,stats_EDF_alts,100.0,20.0,400.0,dt,(global_rate/2.0), num_parts, my_planet.get_radius());
+
+	
 
 	vector<int> active_indices;  // list of indices for active particles
 	active_indices.resize(num_parts);
@@ -332,7 +335,7 @@ void Atmosphere::run_simulation(double dt, int num_steps, double lower_bound, do
 		for (int j=0; j<active_parts; j++)
 		{
 		  update_stats(dt, active_indices[j]);
-		        my_vtally.update_vtally(active_indices[j], my_parts, stats_num_EDFs, stats_EDF_alts, dt, (global_rate/2.0), num_parts);
+		        my_vtally.update_vtally(my_parts[active_indices[j]], stats_num_EDFs, stats_EDF_alts);
 			my_parts[active_indices[j]]->do_timestep(dt, k);
 
 			if (bg_species.check_collision(my_parts[active_indices[j]], dt))
@@ -398,7 +401,6 @@ void Atmosphere::run_simulation(double dt, int num_steps, double lower_bound, do
 
 	output_stats(dt, (global_rate / 2.0), num_parts, output_stats_dir, my_vtally);
 
-        //my_vtally.print_things(100.0, my_parts);
 
 	cout << "Number of collisions: " << bg_species.get_num_collisions() << endl;
 	cout << "Active particles remaining: " << active_parts << endl;

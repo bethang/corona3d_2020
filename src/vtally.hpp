@@ -16,7 +16,7 @@ class Vtally
   
   
 public:
-  Vtally(int num_parts, int num_EDFs,vector<int> EDF_alts, double vtally_x, double vtally_dx, double vtally_psi, double vtally_w, double dt); //, double rate);
+  Vtally(const int &num_EDFs, const vector<int> &EDF_alts, const double &vtally_x, const double &vtally_dx,  const double &vtally_w, const double &dt, const double &rate, const int &num_parts, const double &radius); //, double rate);
   virtual ~Vtally();
 
   
@@ -28,12 +28,11 @@ public:
   //	double get_mass() const;
   //	string get_name() const;
 
-  void update_vtally(int i, const vector<shared_ptr<Particle>> &my_parts, int num_EDFS, vector<int> EDF_alts, double dt, double rate, int num_parts);
-  void calculate_LOS_velocity(int i, vector<shared_ptr<Particle>> my_parts, int j, double dt, double rate, int num_parts);
+  void update_vtally(const shared_ptr<Particle> &p, const int &num_EDFS, const vector<int> &EDF_alts);
+  void calculate_LOS_velocity(const shared_ptr<Particle> &p, const int &j);
   int choose_vel_bin(const double &vel);
-  void print_things(double vtally_x, vector<shared_ptr<Particle>> my_parts);
-  bool is_inside(int i, vector<shared_ptr<Particle>> my_parts, double alt);
-  void record_vtallies(vector<int> stats_EDF_alts, int i, string output_dir);
+  bool is_inside(const shared_ptr<Particle> &p, const double &alt);
+  void record_vtallies(const vector<int> &stats_EDF_alts, const int &i, const string &output_dir);
 
 private:
        int num_vel_bins;
@@ -49,6 +48,7 @@ private:
        int bin;
        double vel_LOS;
        double weighting_factor;
+       double radius_km;
        vector<vector<double>> vtally_matrix; // rows = no. of velocity bins; columns = no. of altitudes (from corona3d.cfg); contains counts and is added to at each timestep.
        vector<vector<double>> cos_sin_angle; // rows: [0] = cos(angle); [1] = sin(angle); columns: one for each angle
 
