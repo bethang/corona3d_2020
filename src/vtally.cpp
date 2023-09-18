@@ -92,10 +92,11 @@ void Vtally::record_vtallies(const string &output_dir){
     int int_alt = chosen_alts[k];
     vtally_out.open(output_dir + "vtally_" + to_string(int_alt) + "km.csv");
     vtally_out << "#velocity_bin_no,min_velocity_in_bin_[km/s],column_density_[cm-2]\n";
-    // NEED TO WRITE OUT -VE VELOCITIES AS REFLECTION OF THE CURRENTLY-RECORDED ABSOLUTE ONES
+    // Copy counts for positive velocities (that were tallied) to negative velocities, as it is a symmetrical distribution.
     for (int j=0; j < num_vel_bins; j++){
       vtally_out << num_vel_bins - 1 - j << "," << (-1*vel_max) + j*((vel_max-vel_min)/num_vel_bins) << "," << vtally_matrix[num_vel_bins - 1 - j][k] << "\n";
     }
+    // Record counts for positive velocities
     for (int j=0; j < num_vel_bins; j++){
       vtally_out << j << "," << vel_min + j*((vel_max-vel_min)/num_vel_bins) << "," << vtally_matrix[j][k] <<"\n"; // here, j is the vel_bin count and i is the altitude count
   }
