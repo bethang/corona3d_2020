@@ -32,8 +32,7 @@ Atmosphere::Atmosphere(int n, int num_to_trace, string trace_output_dir, Planet 
 	stats_EDFs.resize(2);   // index 0 is day side EDFs, 1 is night side
 	stats_EDFs[0].resize(stats_num_EDFs);
 	stats_EDFs[1].resize(stats_num_EDFs);
-	stats_angleavg_dens.resize(stats_num_EDFs); // vector for accumulating angle-averaged column density counts in x=const. plane
-	//bg temp -- remove	stats_angleavg_vel_dist.resize(stats_num_EDFs); // vector for accumulating angle-averaged velocity distributions in x=const. plane
+       	stats_angleavg_dens.resize(stats_num_EDFs); // vector for accumulating angle-averaged column density counts in x=const. plane
 
 	for (int i=0; i<stats_num_EDFs; i++)
 	{
@@ -41,13 +40,11 @@ Atmosphere::Atmosphere(int n, int num_to_trace, string trace_output_dir, Planet 
 		stats_loss_rates[i] = 0.0;
 		stats_EDFs[0][i].resize(201);
 		stats_EDFs[1][i].resize(201);
-	//bg temp -- remove	stats_angleavg_vel_dist[i].resize(201);
 
 		for (int j=0; j<201; j++)
 		{
 			stats_EDFs[0][i][j].resize(201);
 			stats_EDFs[1][i][j].resize(201);
-		//bg temp -- remove	stats_angleavg_vel_dist[i][j] = 0.0;
 
 			for(int k=0; k<201; k++)
 			{
@@ -67,6 +64,7 @@ Atmosphere::Atmosphere(int n, int num_to_trace, string trace_output_dir, Planet 
 		stats_dens_counts[1][i] = 0;
 		stats_coldens_counts[i] = 0;
 	}
+	
 
 	stats_dens2d_counts.resize(1025);
 	for (int i=0; i<1025; i++)
@@ -335,7 +333,7 @@ void Atmosphere::run_simulation(double dt, int num_steps, double lower_bound, do
 		for (int j=0; j<active_parts; j++)
 		{
 		  update_stats(dt, active_indices[j]);
-		        my_vtally.update_vtally(my_parts[active_indices[j]], stats_num_EDFs, stats_EDF_alts);
+		        my_vtally.update_vtally(my_parts[active_indices[j]]);
 			my_parts[active_indices[j]]->do_timestep(dt, k);
 
 			if (bg_species.check_collision(my_parts[active_indices[j]], dt))
@@ -639,9 +637,10 @@ void Atmosphere::output_stats(double dt, double rate, int total_parts, string ou
 
 	loss_rates_out.open(output_dir + "loss_rates.out");
 	loss_rates_out << "#alt[km]\tloss rate[s-1]\n";
+
+	my_vtally.record_vtallies(output_dir);
 	for (int i=0; i<stats_num_EDFs; i++)
 	{
-	  	my_vtally.record_vtallies(stats_EDF_alts, i, output_dir);
 		EDF_day_out.open(output_dir + "EDF_day_" + to_string(stats_EDF_alts[i]) + "km.out");
 		EDF_night_out.open(output_dir + "EDF_night_" + to_string(stats_EDF_alts[i]) + "km.out");
 	//bg temp -- remove	angleavg_vel_dist_out.open(output_dir + "angleavg_vel_dist_" + to_string(stats_EDF_alts[i]) + "km.csv");

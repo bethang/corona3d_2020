@@ -72,5 +72,5 @@ for tick in ax.zaxis.get_majorticklabels():
 for tick in ax.zaxis.get_majorticklabels()[2:16:2]:
     tick.set_color('none')
 ax.tick_params(axis='z', which='major', pad=9)
-plt.savefig('end_positions.png',dpi=1200)
+plt.savefig('end_positions.png',dpi=300)
 plt.show()
