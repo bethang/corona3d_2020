@@ -35,7 +35,7 @@ Vtally::Vtally(const int &num_EDFs, const vector<int> &EDF_alts, const double &v
 
 void Vtally::update_vtally(const shared_ptr<Particle> &p){
 
-  for (int j=0; j< 3; j++)
+  for (int j=0; j< chosen_alts.size(); j++)
     {
       if (is_inside(p, chosen_alts[j]))
 	{
