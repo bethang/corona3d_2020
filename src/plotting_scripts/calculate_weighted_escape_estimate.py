@@ -30,7 +30,7 @@ def calculate_weighted_escape_estimate(SA_list):
 
     planet = 'Mars' 
     
-    fig_choice = 13 # do you want to...
+    fig_choice = 14 # do you want to...
     #(1) calculate escape rates from and plot all the mechanisms; Note --- this will break if ecsape_estimates/escape_estimates_LSA and escape_estimates/escape_estimates_HSA already exist.
     #(8) Plot escape estimate method (Gregory et al. (2023) Figure 1);
     #12) Plot reactant densities, production rates, escape probabilities, and escaping H production rates for top 5 mechanisms (Figure 3 in paper);
