@@ -19,11 +19,11 @@ def observations_plot():
     ax5 = ax2.twinx().twiny()
     ax6 = ax3.twinx().twiny()
 
-    # Chaffin+ 2018 brightnesses:
-    min_I = np.multiply(pd.read_csv('Chaffin2018_min.csv')['I'],1000)
-    min_alt = pd.read_csv('Chaffin2018_min.csv')['alt']
-    max_I = np.multiply(pd.read_csv('Chaffin2018_max.csv')['I'],1000)
-    max_alt = pd.read_csv('Chaffin2018_max.csv')['alt']
+#    # Plot Chaffin+ 2018 brightnesses for comparison:
+#    min_I = np.multiply(pd.read_csv('Chaffin2018_min.csv')['I'],1000)
+#    min_alt = pd.read_csv('Chaffin2018_min.csv')['alt']
+#    max_I = np.multiply(pd.read_csv('Chaffin2018_max.csv')['I'],1000)
+#    max_alt = pd.read_csv('Chaffin2018_max.csv')['alt']
 #    ax1.plot(min_I,min_alt,color='darkorange')
 #    ax1.plot(max_I,max_alt,color='darkorange')
   #  ax1.fill_betweenx(z_new_km,accumulated_prod_LSA_old,accumulated_prod_LSA_new, facecolor=accumulated_colors_LSA[i], alpha=1)plot(min_I
@@ -36,8 +36,8 @@ def observations_plot():
     dens_prof = []
     altitudes = [1000,2000,3000] #range(100,5001,100) #5001
     for z in altitudes:
-        col_dens = nadir_density(z,'LSA/1/output/density1d_day.out')[0]
-        I = nadir_density(z,'LSA/1/output/density1d_day.out')[1]
+        col_dens = nadir_density(z,'/Users/begr3234/corona3d2023/safe/model_output_data/LSA/1/output/density1d_day.out')[0]
+        I = nadir_density(z,'/Users/begr3234/corona3d2023/safe/model_output_data/LSA/1/output/density1d_day.out')[1]
         col_dens2 = nadir_density(z,'/Users/begr3234/corona_github_bethang/corona3d_2020/src/output/EDFslab_test4/density1d_day.out')[0]
         I2 = nadir_density(z,'/Users/begr3234/corona_github_bethang/corona3d_2020/src/output/EDFslab_test4/density1d_day.out')[1]
        # nadir_profile.append(nadir_density(z)) # argument is spacecraft altitude in km
@@ -128,6 +128,8 @@ def observations_plot():
 
     # 2) Plot limb velocity distributions
     from Nv_v import Nv_v
+    from plot_limb_vel_dist import plot_limb_vel_dist
+    plot_limb_vel_dist(ax2,[300,1000,4000]) # send to function to plot average LOS velocity in limb observation at chosen altitudes
     for z in [300,1000,4000]:
         v, Nv = Nv_v(z,'limb')
   #      ax2.plot(v,np.divide(Nv,2*(3.397e8+5000e5)),label='%s km' % (str(z)))
@@ -162,8 +164,8 @@ def observations_plot():
 
     
     # Plot echelle channel limits: 20 km/s
-    ax2.plot([10,10],[0,6e22],color='k')
-    ax2.plot([-10,-10],[0,6e22],color='k')
+# CHANGE BACK    ax2.plot([10,10],[0,6e22],color='k')
+# CHANGE BACK    ax2.plot([-10,-10],[0,6e22],color='k')
     ax3.plot([-10,-10],[0,2.1e8],color='k')
     ax3.plot([10,10],[0,2.1e8],color='k')
 #    ax2.set_yscale('log')
@@ -177,11 +179,11 @@ def observations_plot():
   #      ax.set_yscale('log')
     ax3.set_ylabel('v (km/s)')
     ax1.set_ylabel('Altitude (km)')
-    for ax in [ax2,ax3]:
+    for ax in [ax3]: #CHANGE BACK[ax2,ax3]:
         ax.legend()
         ax.set_ylabel('N$_v$ (10$^8$ cm$^{-2}$/(km/s))')
    
-    ax5.set_xlabel('$\Delta $\u03BB (10$^{-3}$ nm)')
+# CHANGE BACK    ax5.set_xlabel('$\Delta $\u03BB (10$^{-3}$ nm)')
 #    ax6.set_xlabel('$\Delta $\u03BB (nm)')
 
     ax7 = ax2.twinx()
@@ -189,17 +191,17 @@ def observations_plot():
     ax9 = ax2.twiny()
     ax10 = ax3.twiny()
 
-    for ax in [ax2,ax3]:
+    for ax in [ax3]: # CHANGE BACK[ax2,ax3]:
         ax.set_xlim([-40,40])
         ax.ticklabel_format(axis='y',style='sci')
       #  ax.yaxis.set_major_formatter(FormatStrFormatter('%.1e1'))
-    for ax in [ax5,ax6,ax9,ax10]:
+    for ax in [ax6,ax10]: # CHANGE BACK[ax5,ax6,ax9,ax10]:
         ax.set_xlim([-40*121.56/(1e-3*3e5),40*121.56/(1e-3*3e5)])
     #ax2.set_ylim([0,1.5e17])
-    ax2.set_ylim([0,1.5e8])
-    for ax in [ax5,ax7]:
+# CHANGE BACK    ax2.set_ylim([0,1.5e8])
+# CHANGE BACK    for ax in [ax5,ax7]:
         #ax.set_ylim([0,1.5e17*1e-9])
-        ax.set_ylim([0,1.5e8*1e-9])
+# CHANGE BACK        ax.set_ylim([0,1.5e8*1e-9])
     ax3.set_ylim([0,2.1e8])
 
     for ax in [ax6,ax8]:
@@ -225,7 +227,7 @@ def observations_plot():
     
     fig1.subplots_adjust(hspace=0.04,left=0.08)
 
-    ax7.set_ylabel('I (R)')
+ # CHANGE BACK   ax7.set_ylabel('I (R)')
     ax8.set_ylabel('I (R)')
 
     ax1.tick_params('both',width=1,length=8,direction='in',right=True)

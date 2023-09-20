@@ -15,7 +15,7 @@ x = plan_rad * np.outer(np.cos(u), np.sin(v))
 y = plan_rad * np.outer(np.sin(u), np.sin(v))
 z = plan_rad * np.outer(np.ones(np.size(u)), np.cos(v))
 
-output_directory = '../model_output_data/LSA/traced_positions_LSA'
+output_directory = '../../../safe/model_output_data/LSA/traced_positions_LSA'
 
 # Plot initial positions of 1e5 test particles
 datFile = '%s/positions1000.out' % (output_directory)
@@ -72,5 +72,5 @@ for tick in ax.zaxis.get_majorticklabels():
 for tick in ax.zaxis.get_majorticklabels()[2:16:2]:
     tick.set_color('none')
 ax.tick_params(axis='z', which='major', pad=9)
-plt.savefig('figures/end_positions.png',dpi=1200)
+plt.savefig('end_positions.png',dpi=300)
 plt.show()
